@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ModalContext } from "../App";
 
 function Register() {
-  const { modal,setModal,generateRandom } = useContext(ModalContext);
+  const { modal,setModal,generateRandom} = useContext(ModalContext);
 
   const validateOtp = () => {
     // checking for null values required because type defined

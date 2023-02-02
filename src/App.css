@@ -1,13 +1,24 @@
-.otpmodal {
-    border: 1px solid #817d7d;
-    border-radius: 4px;
-    min-width: 350px;
+.otpmodalcover {
+    height: 100vh;
+    width: 100%;
+    background-color: #a5a1a15e;
     position: fixed;
-    top: 33%;
-    left: 40%;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* display: none; */
 }
 
-button.otpmodal__close  {
+.otpmodal {
+    border: 1px solid #817d7d;
+    background-color: white;
+    border-radius: 4px;
+    min-width: 350px;
+    position: relative;
+}
+
+button.otpmodal__close {
     position: absolute;
     right: 15px;
     top: 15px;
@@ -18,14 +29,14 @@ button.otpmodal__close  {
 
 .otpmodal__header {
     border-bottom: 1px solid grey;
-    padding:0 0.5rem;
+    padding: 0 0.5rem;
 }
 
-.otpmodal__body  {
+.otpmodal__body {
     padding: 1rem;
 }
 
-.otp__modal__body__title  {
+.otp__modal__body__title {
     margin: 0.5rem 0;
 }
 
@@ -42,25 +53,35 @@ button.otpmodal__close  {
     border-radius: 2px;
 }
 
-.otpmodal__inpnums--wrng  {
+.otpmodal__inpnums::-webkit-outer-spin-button,
+.otpmodal__inpnums::-webkit-inner-spin-button   {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.otpmodal__inpnums--wrng {
     border: 1px solid #c53131;
 }
 
-.otpmodal__inpnums--rght  {
+.otpmodal__inpnums--rght {
     border: 1px solid #096209;
 }
 
-.otpmodal__inperror  {
+.otpmodal__inperror {
     color: #c53131;
 }
 
-.otpmodal__inphelp  {
-    display: flex; 
+.otpmodal__inpmsg {
+    color: #207fc3;
+}
+
+.otpmodal__inphelp {
+    display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.otpmodal__timer  {
+.otpmodal__timer {
     color: #c53131;
     font-weight: 500;
     font-size: 14px;
@@ -73,9 +94,13 @@ button.otpmodal__close  {
     color: white;
 }
 
-.btn--primary  {
+.btn:not(:disabled) {
+    cursor: grab;
+}
+
+.btn--primary {
     background-color: #207fc3;
-    
+
 }
 
 .btn--link {
@@ -85,15 +110,26 @@ button.otpmodal__close  {
     padding: 0;
 }
 
-.btn--disabled{
+.btn--disabled {
     opacity: 0.7;
 }
 
-.btn--danger  {
+.btn--danger {
     background-color: #c53131;
     color: white;
 }
 
-.shorttxt  {
-    font-size: 13px;    
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.75rem 0;
+}
+
+.loader__pic {
+    max-height: 20px;
+}
+
+.shorttxt {
+    font-size: 14px;
 }

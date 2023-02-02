@@ -1,13 +1,13 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext} from "react";
 import "./App.css";
-import OTPLayout from "./components/OTPLayout";
+import OTPLayout from "./components/OtpLayout";
 import Register from "./components/Register";
 import { TModal } from "./types";
 
-export const ModalContext = createContext<{modal:TModal,setModal:React.Dispatch<React.SetStateAction<TModal>>|null,generateRandom:()=>number}>({modal:{isOpen:false,otp:0,otpMatch:false},setModal:null,generateRandom:()=>0});
+export const ModalContext = createContext<{modal:TModal,setModal:React.Dispatch<React.SetStateAction<TModal>>|null,generateRandom:()=>number}>({modal:{isOpen:false,otp:0},setModal:null,generateRandom:()=>0});
 
 function App() {
-  const [modal, setModal] = useState<TModal>({ isOpen: false, otp: 0, otpMatch:false });
+  const [modal, setModal] = useState<TModal>({ isOpen: false, otp: 0 });
 
     // function to generate a random %  digit number to be used as OTP
     const generateRandom = () => {
@@ -36,7 +36,7 @@ function App() {
     <div className="App">
       <ModalContext.Provider value={{modal:modal,setModal:setModal,generateRandom:generateRandom}}>
         <Register />
-        <OTPLayout/>
+        {modal.isOpen?<OTPLayout/>:''}
       </ModalContext.Provider>
     </div>
   );
