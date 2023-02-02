@@ -32,12 +32,12 @@ function OtpLayout() {
   const interval = useRef<ReturnType<typeof setInterval>>();
 
   // useContext hook is used for getting values
-  const { modal, setModal, generateRandom,} =
-    useContext(ModalContext);
+  const { modal, setModal, generateRandom } = useContext(ModalContext);
 
-    // useEffect used for starting timer on initial render,setting focus on input and disabling button
+  // useEffect used for starting timer on initial render,setting focus on input and disabling button
   useEffect(() => {
     interval.current = setInterval(startTimer, 1000);
+    setAttempts((prev) => prev - 1);
     refInpNum1.current!.focus();
     refResendBtn.current!.disabled = true;
     return () => {
@@ -77,7 +77,7 @@ function OtpLayout() {
 
     // condition to check that each input box is filled
     if (emptyIndex === -1) {
-      setLoading(true)
+      setLoading(true);
       checkOTP();
     } else {
       refArr.forEach((ele) => {
@@ -90,31 +90,32 @@ function OtpLayout() {
 
   // function for validating OTP
   const checkOTP = () => {
-      // converting all the values of refArr elements in a number
-      let temp = parseInt(refArr.map((ele) => ele.ref.current!.value).join(""));
-      // condition to compare input numbers with generated OTP
-      if (temp === modal.otp) {
-        // to empty error message
-        setOtpError("");
-        // to change all input boxes style
-        refArr.forEach((ele) => {
-          ele.ref.current!.classList.remove("otpmodal__inpnums--wrng");
-          ele.ref.current!.classList.add("otpmodal__inpnums--rght");
-        });
-        // changing isOpen property which will initiate unmounting the modal
-        setTimeout(() => {
-          setModal!({ ...modal, isOpen: false });
-        }, 1000);
-      } else {
-        // to show error message
-        setOtpError("Entered One-Time-Passcode is incorrect");
-        // to change all input boxes style
-        refArr.forEach((ele) => {
-          ele.ref.current!.classList.add("otpmodal__inpnums--wrng");
-          ele.ref.current!.classList.remove("otpmodal__inpnums--rght");
-        });
-      }
+    // converting all the values of refArr elements in a number
+    let temp = parseInt(refArr.map((ele) => ele.ref.current!.value).join(""));
+    // condition to compare input numbers with generated OTP
+    if (temp === modal.otp) {
+      // to empty error message
+      setOtpError("");
+      // to change all input boxes style
+      refArr.forEach((ele) => {
+        ele.ref.current!.classList.remove("otpmodal__inpnums--wrng");
+        ele.ref.current!.classList.add("otpmodal__inpnums--rght");
+      });
+      // changing isOpen property which will initiate unmounting the modal
+      setTimeout(() => {
+        setModal!({ ...modal, isOpen: false });
+        setLoading(false);
+      }, 1000);
+    } else {
+      // to show error message
+      setOtpError("Entered One-Time-Passcode is incorrect");
+      // to change all input boxes style
+      refArr.forEach((ele) => {
+        ele.ref.current!.classList.add("otpmodal__inpnums--wrng");
+        ele.ref.current!.classList.remove("otpmodal__inpnums--rght");
+      });
       setLoading(false);
+    }
   };
 
   // useEffect used to clear preious interval and start a new one
@@ -148,13 +149,13 @@ function OtpLayout() {
   };
 
   return (
-    <div className="otpmodalcover" >
+    <div className="otpmodalcover">
       <div className="otpmodal">
         {/* using ! to explicitly tell that setModal action is not null in onclick fn oof below button */}
         <button
           className="otpmodal__close btn btn--danger"
           onClick={() => {
-            setModal && setModal({...modal,isOpen:false})
+            setModal && setModal({ ...modal, isOpen: false });
           }}
         >
           X
