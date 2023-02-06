@@ -1,3 +1,44 @@
+.App {
+    padding: 0 0.5rem;
+}
+
+.btn {
+    padding: 5px;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.btn--primary {
+    background-color: #207fc3;
+}
+
+.box {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    margin: 1rem 0;
+}
+
+.alert {
+    padding: 1rem;
+    border: 1px solid;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+.alert--error {
+    background-color: #c914143d;
+    color: #a94242;
+}
+
+.alert--successful {
+    background-color: #0080002e;
+    color: #008000bf;
+}
+
 .otpmodalcover {
     height: 100vh;
     width: 100%;
@@ -7,7 +48,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* display: none; */
 }
 
 .otpmodal {
@@ -54,7 +94,7 @@ button.otpmodal__close {
 }
 
 .otpmodal__inpnums::-webkit-outer-spin-button,
-.otpmodal__inpnums::-webkit-inner-spin-button   {
+.otpmodal__inpnums::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
@@ -87,20 +127,8 @@ button.otpmodal__close {
     font-size: 14px;
 }
 
-.btn {
-    padding: 5px;
-    border: 1px solid white;
-    border-radius: 2px;
-    color: white;
-}
-
 .btn:not(:disabled) {
     cursor: grab;
-}
-
-.btn--primary {
-    background-color: #207fc3;
-
 }
 
 .btn--link {
@@ -108,6 +136,7 @@ button.otpmodal__close {
     color: #1555b7;
     background-color: transparent;
     padding: 0;
+    box-shadow:none;
 }
 
 .btn--disabled {
