@@ -1,13 +1,10 @@
-.App {
-    padding: 0 0.5rem;
-}
-
 .btn {
-    padding: 5px;
+    padding: 0.25rem 0.5rem;
     border: none;
     border-radius: 2px;
     color: white;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-size: 14px;
 }
 
 .btn--primary {
@@ -15,11 +12,19 @@
 }
 
 .box {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.25rem;
-    margin: 1rem 0;
+    gap: 0.5rem;
+    margin: 1rem 0.5rem;
+}
+
+.box__header {
+    margin: 0.25rem 0;
+}
+
+.box__inptext {
+    font-size: 14px;
 }
 
 .alert {
@@ -76,12 +81,12 @@ button.otpmodal__close {
     padding: 1rem;
 }
 
-.otp__modal__body__title {
+.otpmodal__body__title {
     margin: 0.5rem 0;
 }
 
 .otpmodal__inpgrp {
-    display: flex;
+    display: inline-flex;
     gap: 5px;
     margin: 0.5rem 0;
 }
@@ -89,8 +94,10 @@ button.otpmodal__close {
 .otpmodal__inpnums {
     width: 30px;
     height: 30px;
-    border: 1px solid #817d7d;
-    border-radius: 2px;
+    border: 2px solid #817d7d;
+    border-radius: 4px;
+    font-size: 15px;
+    text-align: center;
 }
 
 .otpmodal__inpnums::-webkit-outer-spin-button,
@@ -99,12 +106,13 @@ button.otpmodal__close {
     margin: 0;
 }
 
-.otpmodal__inpnums--wrng {
-    border: 1px solid #c53131;
+.otpmodal__inpnums--wrng,.otpmodal__inpnums--wrng:focus {
+    border: 2px solid #c53131;
+    outline: none;
 }
 
 .otpmodal__inpnums--rght {
-    border: 1px solid #096209;
+    border: 2px solid #096209;
 }
 
 .otpmodal__inperror {
@@ -112,13 +120,14 @@ button.otpmodal__close {
 }
 
 .otpmodal__inpmsg {
-    color: #207fc3;
+    color: green;
 }
 
 .otpmodal__inphelp {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
 }
 
 .otpmodal__timer {
@@ -128,7 +137,7 @@ button.otpmodal__close {
 }
 
 .btn:not(:disabled) {
-    cursor: grab;
+    cursor: pointer;
 }
 
 .btn--link {
@@ -149,10 +158,10 @@ button.otpmodal__close {
 }
 
 .loader {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin: 0.75rem 0;
+    margin: 0.75rem;
 }
 
 .loader__pic {
