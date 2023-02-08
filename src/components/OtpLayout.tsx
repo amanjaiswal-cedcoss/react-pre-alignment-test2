@@ -13,16 +13,18 @@ function OtpLayout(props: TProps) {
   const { modal, setModal, generateRandomOtp, otpArr } = props;
   const [state, setState] = useState({
     loading: false,
-    attempts: 1,
+    attempts: 5,
     otpError: "",
   });
-  // separate state for storing previous values of inputs
+  // separate state for storing previous values of inputs(used for providing better user experience)
   const [prevNums, setPrevNums] = useState(otpArr.map((ele) => ""));
   const refNums = useRef<HTMLInputElement[]>([]);
   // separate state for timer
   const [timer, setTimer] = useState({ min: 1, sec: 0 });
+  // separate state for all the mesages (error and successful)
+  const [msg, setMsg] = useState({ type: "", value: "" });
   const refResendBtn = useRef<HTMLButtonElement>(null);
-  const refInpMsg = useRef<HTMLSpanElement>(null);
+  // const refInpMsg = useRef<HTMLSpanElement>(null);
   const interval = useRef<ReturnType<typeof setInterval>>();
 
   // useEffect used for starting timer on initial render,setting focus on input and disabling button
@@ -52,29 +54,29 @@ function OtpLayout(props: TProps) {
     setTimer({ ...timer });
   };
 
-  const changeHandlerNums = (
+  const keyUpHandlerNums = (
     e: React.KeyboardEvent<HTMLInputElement>,
     num: number
   ) => {
     let currentValue = refNums.current![num].value;
     let key = e.key;
-    console.log(prevNums[num], currentValue);
+    console.log(currentValue);
     if (currentValue.match(/^[0-9]{1}$/) || currentValue === "") {
       // condition to check for index of ref input to be less than 1 less than refArray length and value be not empty
-      if ( key.match(/^[0-9]{1}$/)) {
-        if(num < refNums.current.length - 1 ){
+      if (key.match(/^[0-9]{1}$/)) {
+        if (num < refNums.current.length - 1) {
           refNums.current![num + 1].focus();
         }
+        // rewriting because input max length is 1
         refNums.current![num].value = key;
-      } else if (num > 0 && key === "Backspace") {
-        if (prevNums[num] !== currentValue) {
-          refNums.current![num - 1].focus();
-        } else {
-          refNums.current![num - 1].value = "";
-          refNums.current![num - 1].focus();
-        }
+      } else if (
+        num > 0 &&
+        key === "Backspace" &&
+        prevNums[num] === currentValue
+      ) {
+        refNums.current![num - 1].value = "";
+        refNums.current![num - 1].focus();
       }
-
       setPrevNums(refNums.current!.map((ele) => ele.value));
       // using findIndex fn to find if any ref in refArray whose value is empty
       let emptyIndex = refNums.current!.findIndex((ele) => {
@@ -111,7 +113,7 @@ function OtpLayout(props: TProps) {
         ele.classList.add("otpmodal__inpnums--rght");
         ele.blur();
       });
-      refInpMsg.current!.textContent='OTP matched successfully.'
+      setMsg({ type: "successful", value: "OTP matched successfully." });
       // changing isOpen property which will initiate unmounting the modal
       setTimeout(() => {
         setModal!({ ...modal, isOpen: false });
@@ -156,14 +158,17 @@ function OtpLayout(props: TProps) {
       setModal!({ ...modal, otp: generateRandomOtp() });
       // setting initial value for timer
       setTimer({ min: 1, sec: 0 });
-      refInpMsg.current!.textContent = "One time passcode sent successfully!";
-      setTimeout(() => {
-        refInpMsg.current!.textContent = "";
-      }, 2000);
+      setMsg({
+        type: "successful",
+        value: "One time passcode sent successfully!",
+      });
     } else {
       // message for crossing attempt limit
-      setState({ ...state, otpError: "Attempts limit reached." });
+      setMsg({ type: "error", value: "Attempts limit reached." });
     }
+    setTimeout(() => {
+      setMsg({ type: "", value: "" });
+    }, 2000);
   };
 
   return (
@@ -192,7 +197,7 @@ function OtpLayout(props: TProps) {
                       refNums.current[i] = ref;
                     }}
                     onKeyUp={(e) => {
-                      changeHandlerNums(e, i);
+                      keyUpHandlerNums(e, i);
                     }}
                     // to allow only numbers to be enterred
                     onChange={(e) => {
@@ -217,8 +222,11 @@ function OtpLayout(props: TProps) {
               ""
             )}
           </div>
-          <span className="otpmodal__inperror shorttxt">{state.otpError}</span>
-          <span className="otpmodal__inpmsg shorttxt" ref={refInpMsg}></span>
+          {/* condition to allow only one message to be displayed at a time*/}
+          {msg.value==='' && <span className="otpmodal__inperror shorttxt">{state.otpError}</span>}
+          <span className={`otpmodal__inpmsg--${msg.type} shorttxt`}>
+            {msg.value}
+          </span>
           <div className="otpmodal__inphelp">
             <span>
               <button
